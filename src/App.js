@@ -1,23 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { Input } from './components/Input'
+import { Todos } from './components/Todos'
+import { Button } from './components/Button'
+import uniqid from 'uniqid';
 
 function App() {
+  const [todos, setTodos] = useState([]) 
+  // todos = ["tarefa2", "tarefa1"...] X
+  // Debe ser: todos = [{id: xyx, name: "tarefa1"}]
+  const [newTodo, setNewTodo] = useState("")
+  
+  const handleAddTodo = () => {
+    if (newTodo !== "") {
+      const newTodoObject = {
+        name: newTodo,
+        id: uniqid()
+      }
+      setTodos([...todos, newTodoObject])
+    }
+  }
+
+  const handleInputChange = (val) => {
+    setNewTodo(val)
+  }
+
+  const handleTodoDelete = (id) => {
+    const newTodos = []
+
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].id !== id)
+        newTodos.push(todos[i])
+    }
+    setTodos(newTodos) 
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> To-do List </h1>
+      <div>
+        <Input onValueChange={(val) => handleInputChange(val)}></Input>
+        <Button label="Add" onButtonClicked={() => handleAddTodo()}/>
+      </div>
+      <Todos todos={todos} onTodoDeleted={(id) => handleTodoDelete(id)}></Todos>
     </div>
   );
 }
