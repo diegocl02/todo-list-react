@@ -7,8 +7,8 @@ import uniqid from 'uniqid';
 
 function App() {
   const [todos, setTodos] = useState([]) 
-  // todos = ["tarefa2", "tarefa1"...] X
-  // Debe ser: todos = [{id: xyx, name: "tarefa1"}]
+  // nao debe ser-> todos = ["tarefa2", "tarefa1"...] 
+  // debe ser-> todos = [{id: xyx, name: "tarefa1"}]
   const [newTodo, setNewTodo] = useState("")
   
   const handleAddTodo = () => {
