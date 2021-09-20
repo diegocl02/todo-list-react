@@ -1,16 +1,21 @@
 import './App.css';
 import { useState } from 'react';
-import { Input } from './components/Input'
-import { Todos } from './components/Todos'
-import { Button } from './components/Button'
+import { Input } from './components/Input/Input'
+import { Todos } from './components/Todos/Todos'
+import { Button } from './components/Button/Button'
 import uniqid from 'uniqid';
 
+
+/**
+ * Main Component of the app, it uses the 
+ * Input, Todos and Button components
+ * @returns 
+ */
 function App() {
   const [todos, setTodos] = useState([]) 
-  // nao debe ser-> todos = ["tarefa2", "tarefa1"...] 
-  // debe ser-> todos = [{id: xyx, name: "tarefa1"}]
   const [newTodo, setNewTodo] = useState("")
   
+  // Handle when the "add" button is clicked
   const handleAddTodo = () => {
     if (newTodo !== "") {
       const newTodoObject = {
@@ -21,10 +26,13 @@ function App() {
     }
   }
 
+  // Handle when the input has changed (new letter is typed)
+  // *React suggest to handle each key typed on inputs  
   const handleInputChange = (val) => {
     setNewTodo(val)
   }
 
+  // Handle when a delete button is clicked
   const handleTodoDelete = (id) => {
     const newTodos = []
 
@@ -38,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <h1> To-do List </h1>
-      <div>
+      <div className="form-wrapper">
         <Input onValueChange={(val) => handleInputChange(val)}></Input>
         <Button label="Add" onButtonClicked={() => handleAddTodo()}/>
       </div>
